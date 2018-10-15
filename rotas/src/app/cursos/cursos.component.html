@@ -1,0 +1,12 @@
+<div class="collection with-header">
+  <h4 class="collection-header">Lista de Cursos</h4>
+  <a class="collection-item indigo-text" *ngFor="let curso of cursos" [routerLink]="[ '/cursos', curso.id ]">
+    {{ curso.descricao }}
+  </a>
+</div>
+
+<p>Página {{pagina}}</p>
+
+<button class="waves-effect waves-indigo btn-flat right" (click)="proximaPagina()">
+  Próxima Página
+</button>

@@ -1,0 +1,29 @@
+<p fundoAmarelo>
+  Texto com fundo amarelo.
+</p>
+
+<button fundoAmarelo>Botão</button>
+
+<p highlightMouse>
+  Texto com highlight ao passar o mouse.
+</p>
+
+
+<p [highlight]="'lightcoral'" [defaultColor]="'white'">
+  Texto com highlight com cores customizadas.
+</p>
+
+<br>
+
+<div *ngIf="mostrarCursos">
+  Lista de cursos aqui.
+</div>
+<div *ngElse="mostrarCursos">
+  Não existem cursos para serem listados.
+</div>
+
+<br>
+
+<button class="btn btn-primary" (click)="onToggleCursos()">
+  Mostrar/Esconder cursos
+</button>

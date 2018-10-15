@@ -1,0 +1,50 @@
+<h5>Exemplos de Pipes:</h5>
+
+<p><b>Título do livro:</b> {{ livro.titulo | uppercase | lowercase | camelcase }}</p>
+<p><b>Rating:</b> {{ livro.rating | number:'2.1-3' }}</p>
+<p><b>Número de páginas:</b> {{ livro.numeroPaginas | number }}</p>
+<p><b>Preço:</b> {{ livro.preco | currency:'BRL' }}</p>
+<p><b>Data Lançamento:</b> {{ livro.dataLancamento | date:"dd' de 'MMMM' de 'yyyy" }}</p>
+
+<br>
+
+<p>Livro: {{ livro | json }}</p>
+
+<h5>Lista de Livros:</h5>
+
+<label for="campoFiltro">Filtro: </label>
+<input type="text" [(ngModel)]="filtro" id="campoFiltro">
+
+<br>
+<br>
+
+<label for="campoNovoLivro">Novo Livro: </label>
+<input type="text" #novoLivro id="campoNovoLivro">
+<button (click)="addLivro(novoLivro.value)">Adicionar Livro</button>
+
+<h5>Pipe Puro</h5>
+<ul>
+    <li *ngFor="let liv of livros | filtroArray:filtro">
+        {{ liv }}
+    </li>
+</ul>
+
+<h5>Pipe Impuro</h5>
+<ul>
+    <li *ngFor="let liv of livros | filtroArrayImpuro:filtro">
+        {{ liv }}
+    </li>
+</ul>
+
+<h5>Maneira correta de filtrar Arrays em projetos</h5>
+<ul>
+    <li *ngFor="let liv of obterLivros()">
+        {{ liv }}
+    </li>
+</ul>
+
+<br>
+
+<h5>Pipe Async</h5>
+<p>{{ valorAsyncPromise | async }}</p>
+<p>{{ valorAsyncObservable | async }}</p>

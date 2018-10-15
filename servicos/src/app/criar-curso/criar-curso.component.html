@@ -1,0 +1,15 @@
+<h5>Criar Curso</h5>
+
+<input type="text" #novoCurso>
+<br><br>
+<button (click)="addCurso(novoCurso.value)">Criar Curso</button>
+
+<br><br>
+
+<ul *ngFor="let curso of cursos">
+  <li>
+    {{ curso }}
+  </li>
+</ul>
+
+<app-receber-curso-criado></app-receber-curso-criado>
