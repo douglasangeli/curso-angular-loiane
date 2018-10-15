@@ -1,0 +1,89 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+  <div class="form-group form-row">
+    <div class="col-md-12">
+      <label for="campoNome">Nome</label>
+      <input type="text" class="form-control" [class.is-invalid]="!isValid(nome)" id="campoNome" placeholder="Seu nome" name="nome"
+        [(ngModel)]="usuario.nome" required #nome="ngModel">
+      <div class="invalid-feedback">Campo obrigatório</div>
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col-md-12">
+      <label for="campoEmail">Email</label>
+      <input type="email" class="form-control" [class.is-invalid]="!isValid(email)" id="campoEmail" aria-describedby="emailHelp"
+        placeholder="seu@email.com" name="email" [(ngModel)]="usuario.email" required email #email="ngModel">
+      <div class="invalid-feedback">Email inválido</div>
+
+      <small id="emailHelp" class="form-text text-muted">Nunca compartilharemos seu email com ninguém.</small>
+    </div>
+  </div>
+
+  <div ngModelGroup="endereco">
+
+    <div class="form-group form-row">
+      <div class="col-md-3">
+        <label for="campoCep">CEP</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(cep)" id="campoCep" placeholder="CEP" name="cep" [(ngModel)]="usuario.endereco.cep"
+          required #cep="ngModel" (blur)="consultaCep($event.target.value, f)">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="campoNumero">Número</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(numero)" id="campoNumero" placeholder="Número" name="numero"
+          [(ngModel)]="usuario.endereco.numero" required #numero="ngModel">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="campoComplemento">Complemento</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(complemento)" id="campoComplemento" placeholder="Complemento"
+          name="complemento" [(ngModel)]="usuario.endereco.complemento" required #complemento="ngModel">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+    </div>
+
+    <div class="form-group form-row">
+      <div class="col-md-12">
+        <label for="campoLogradouro">Logradouro</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(logradouro)" id="campoLogradouro" placeholder="Logradouro"
+          name="logradouro" [(ngModel)]="usuario.endereco.logradouro" required #logradouro="ngModel">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group form-row">
+      <div class="col-md-5">
+        <label for="campoBairro">Bairro</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(bairro)" id="campoBairro" placeholder="Bairro" name="bairro"
+          [(ngModel)]="usuario.endereco.bairro" required #bairro="ngModel">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="col-md-5">
+        <label for="campoCidade">Cidade</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(cidade)" id="campoCidade" placeholder="Cidade" name="cidade"
+          [(ngModel)]="usuario.endereco.cidade" required #cidade="ngModel">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="col-md-2">
+        <label for="campoUf">UF</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid(uf)" id="campoUf" placeholder="UF" name="uf" [(ngModel)]="usuario.endereco.uf"
+          required #uf="ngModel">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+
+  <app-form-debug [form]="f"></app-form-debug>
+
+</form>

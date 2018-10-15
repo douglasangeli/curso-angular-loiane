@@ -1,0 +1,151 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formulario">
+
+  <app-input-field formControlName="nome" id="campoNome" label="Nome" [valid]="isValid('nome')" placeholder="Seu nome">
+  </app-input-field>
+
+  <div class="form-group form-row">
+    <div class="col-md-12">
+      <label for="campoEmail">Email</label>
+      <input type="email" class="form-control" [class.is-invalid]="!isValid('email')" id="campoEmail" placeholder="seu@email.com"
+        formControlName="email">
+      <div class="invalid-feedback">{{ getErroEmail() }}</div>
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col-md-12">
+      <label for="campoConfirmacaoEmail">Confirmação do Email</label>
+      <input type="email" class="form-control" [class.is-invalid]="!isValid('confirmacaoEmail')" id="campoConfirmacaoEmail" placeholder="seu@email.com"
+        formControlName="confirmacaoEmail">
+      <div class="invalid-feedback">Confirmação deve ser igual ao email</div>
+    </div>
+  </div>
+
+  <div formGroupName="endereco">
+
+    <div class="form-group form-row">
+      <div class="col-md-3">
+        <label for="campoCep">CEP</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid('endereco.cep')" id="campoCep" placeholder="CEP" formControlName="cep">
+        <div class="invalid-feedback">{{ getErroCep() }}</div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="campoNumero">Número</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid('endereco.numero')" id="campoNumero" placeholder="Número"
+          formControlName="numero">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="campoComplemento">Complemento</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid('endereco.complemento')" id="campoComplemento" placeholder="Complemento"
+          formControlName="complemento">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+    </div>
+
+    <div class="form-group form-row">
+      <div class="col-md-12">
+        <label for="campoLogradouro">Logradouro</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid('endereco.logradouro')" id="campoLogradouro" placeholder="Logradouro"
+          formControlName="logradouro">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group form-row">
+      <div class="col-md-5">
+        <label for="campoBairro">Bairro</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid('endereco.bairro')" id="campoBairro" placeholder="Bairro"
+          formControlName="bairro">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+      <!-- 
+      <div class="col-md-5">
+        <label for="campoCidade">Cidade</label>
+        <input type="text" class="form-control" [class.is-invalid]="!isValid('endereco.cidade')" id="campoCidade" placeholder="Cidade"
+          formControlName="cidade">
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div> -->
+
+      <div class="col-md-2">
+          <label for="campoUf">UF</label>
+          <select class="form-control" [class.is-invalid]="!isValid('endereco.uf')" id="campoUf" formControlName="uf">
+            <option *ngFor="let estado of estados" [value]="estado.sigla">{{ estado.nome }}</option>
+          </select>
+          <div class="invalid-feedback">Campo obrigatório</div>
+        </div>
+
+      <div class="col-md-5">
+        <label for="campoCidade">Cidade</label>
+        <select class="form-control" [class.is-invalid]="!isValid('endereco.cidade')" id="campoCidade" formControlName="cidade">
+          <option *ngFor="let cidade of cidades" [value]="cidade.nome">{{ cidade.nome }}</option>
+        </select>
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col-md-2">
+      <label for="campoCargo">Cargo</label>
+      <select class="form-control" id="campoCargo" formControlName="cargo" [compareWith]="compararCargos">
+        <option *ngFor="let cargo of cargos" [ngValue]="cargo">{{ cargo.desc }}</option>
+      </select>
+    </div>
+
+    <div class="col-md-2">
+      <label for="campoTecnologias">Tecnologias</label>
+      <select multiple class="form-control" id="campoTecnologias" formControlName="tecnologias">
+        <option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nome">{{ tecnologia.desc }}</option>
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label for="campoNewsletter" class="control-label">Newsletter</label>
+      <div class="row" id="campoNewsletter">
+        <div class="col-sm-4" *ngFor="let item of newsletterOp">
+          <label class="radio-inline">
+            <input type="radio" [value]="item.valor" formControlName="newsletter"> {{ item.desc }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col-md-5">
+
+      <label for="campoFrameworks" class="control-label">Frameworks</label>
+      <div class="row" id="campoFrameworks">
+        <div class="checkbox col-sm-5" formArrayName="frameworks" *ngFor="let item of getFrameworksControls(); let i = index">
+          <label class="checkbox-inline">
+            <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
+          </label>
+        </div>
+      </div>
+      <div *ngIf="!formulario.get('frameworks').valid" class="alert alert-danger">Por favor, selecione pelo menos 2 frameworks.</div>
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col-md-3">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [class.is-invalid]="!aceitouTermos()" id="chkTermos" formControlName="termos">
+        <label class="custom-control-label" for="chkTermos">Aceito os termos.</label>
+        <div class="invalid-feedback">Por favor, aceite os termos.</div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mr-1">Submit</button>
+  <button type="button" class="btn btn-default mr-1" (click)="cancelar()">Cancelar</button>
+  <button type="button" class="btn btn-info mr-1" (click)="setarCargo()">Cargo</button>
+  <button type="button" class="btn btn-info" (click)="setarTecnologias()">Tecnologias</button>
+
+  <app-form-debug [form]="formulario"></app-form-debug>
+
+</form>

@@ -1,0 +1,15 @@
+<div class="form-group form-row">
+  <div class="col-md-12">
+    <label [attr.for]="id">{{ label }}</label>
+    <input 
+      class="form-control"
+      [type]="type" 
+      [class.is-invalid]="!valid" 
+      [id]="id" 
+      [placeholder]="placeholder" 
+      [readOnly]="!!isReadOnly"
+      [(ngModel)]="value"
+      (blur)="onBlur()">
+    <div class="invalid-feedback">{{ label }} obrigatório</div>
+  </div>
+</div>
